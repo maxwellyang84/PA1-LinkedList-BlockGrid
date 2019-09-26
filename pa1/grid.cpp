@@ -9,7 +9,8 @@
  * memory does not leak on destruction of a grid.
  */
 Grid::~Grid(){ /*your code here*/
-
+    clear();
+    delete this;
 }
 
 /**
@@ -69,7 +70,16 @@ void Grid::rotateCHelper(Node * & node, int c, int count){
  * After clear() the grid represents an empty grid.
  */
 void Grid::clear() { /*your code here*/
-    
+    bheight_ = 0;
+    bwidth_ = 0;
+    for(int i = 0; i < numRows(); i++){
+        Node * ptr = headOfRow_[i];
+        while(ptr != NULL){
+            Node * temp = ptr->right;
+            delete ptr;
+            ptr = temp;
+        }
+    }
   
 }
 
@@ -82,5 +92,7 @@ void Grid::clear() { /*your code here*/
  * constructor and the assignment operator for Grids.
  */
 void Grid::copy(Grid const& other) { /*your code here*/
+    PNG im = other.render();
+
 
 }
