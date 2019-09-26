@@ -80,6 +80,8 @@ void Grid::clear() { /*your code here*/
             ptr = temp;
         }
     }
+    headOfRow_.clear();
+    headOfCol_.clear();
   
 }
 
@@ -92,7 +94,51 @@ void Grid::clear() { /*your code here*/
  * constructor and the assignment operator for Grids.
  */
 void Grid::copy(Grid const& other) { /*your code here*/
-    PNG im = other.render();
+    bwidth_ = other.bwidth();
+    bheight_ = other.bheight();
 
+    if( bwidth_ == 0 || bheight_ == 0 ) {
+    bwidth_ = 0;
+    bheight_ = 0;
+    return;
+  }
+
+  int nRows = other.numRows();
+  int nCols = other.numCols();
+
+  vector < vector < Node * > > A;
+  for( int j=0; j<nRows; j++ ) {
+    vector < Node * > temp;
+    Node* node = other.headOfRow_[j];
+    for( int i=0; i<nCols; i++ ) {
+      Node* p = new Node();
+      *p = *node;
+      temp.push_back(p);
+    }
+    A.push_back(temp);
+  }
+  // Set up the pointer structure between Nodes
+  for( int j=0; j<nRows; j++ ) {
+    for( int i=0; i<nCols; i++ ) {
+      Node *p = A[j][i];
+      // The following uses the C++ conditional operator
+      // (also known as the C ternary operator):
+      //
+      // (condition) ? (if_true) : (if_false)
+      //
+      // which has the value if_true if the condition is true
+      // and has the value if_false otherwise.
+      p->up    = A[(j==0) ? nRows-1 : j-1] [i]; 
+      p->down  = A[(j==nRows-1) ? 0 : j+1][i];
+      p->left  = A[j] [(i==0) ? nCols-1 : i-1];
+      p->right = A[j] [(i==nCols-1) ? 0 : i+1];
+    }
+  }
+  for( int j=0; j<nRows; j++ ) {
+    headOfRow_.push_back(A[j][0]);
+  }
+  for( int i=0; i<nCols; i++ ) {
+    headOfCol_.push_back(A[0][i]);
+  }
 
 }
