@@ -26,16 +26,17 @@ Block::Block() {/* nothing */}
  */
 Block::Block(PNG & im, int x, int y, int width, int height) {/*your code here*/
     
-    data.resize(height-1);
+    
     int temp_y = y;
     for(int i = 0; i < height-1; i++){
-        data[i].resize(width-1);
+        vector<HSLAPixel> temp;
         int temp_x = x;
         for(int j = 0; j < width - 1; j++){
             HSLAPixel p = *im.getPixel(temp_x,temp_y);
-            data[i].push_back(p);
+            temp.push_back(p);
             temp_x++;
         }
+        data.push_back(temp);
         temp_y++;
     }
 }

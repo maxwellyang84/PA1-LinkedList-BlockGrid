@@ -110,10 +110,11 @@ void Grid::copy(Grid const& other) { /*your code here*/
   for( int j=0; j<nRows; j++ ) {
     vector < Node * > temp;
     Node* node = other.headOfRow_[j];
+   
     for( int i=0; i<nCols; i++ ) {
-      Node* p = new Node();
-      *p = *node;
+      Node* p = new Node(node->block);
       temp.push_back(p);
+      node = node->right;
     }
     A.push_back(temp);
   }
