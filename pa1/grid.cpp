@@ -20,23 +20,43 @@ Grid::~Grid(){ /*your code here*/
  * Rotate headOfCol_ if necessary.
  */
 void Grid::rotateR(int r, int count) { /* your code here */
-    if(count == 0) return;
+    r = r%numRows();
+    if(count == 0) {
+        if(r == 0){
+        Node *headCol = headOfRow_[r];
+        for(int i = 0; i < numCols();i++){
+            headOfCol_[i] = headCol;
+            headCol = headCol->right;
+        }
+      }
+      return;
+    }
     Node* head = headOfRow_[r];
-    rotateRHelper(head, r, numCols());
+    rotateRHelper(head, r, numCols()-1);
+    
     rotateR(r, count-1);
 
 }
 
 void Grid::rotateRHelper(Node * & node, int r, int count){
     if(count== 0){
+        headOfRow_[r == 0 ? numRows()-1:r-1]->down = node;
+        headOfRow_[r == numRows() - 1? 0:r+1]->up = node;
         node->up = headOfRow_[r == 0 ? numRows()-1:r-1];
         node->down = headOfRow_[r == numRows() - 1? 0:r+1];
         headOfRow_[r] = node;
+        return;
     }
+    node->right->up->down = node;
+    node->right->down->up = node;
     node->up = node->right->up;
     node->down = node->right->down;
     rotateRHelper(node->right, r, count - 1);
 }
+
+
+
+
 
 /**
  * Rotate column c (column 0 is the first) by count positions.
@@ -45,18 +65,33 @@ void Grid::rotateRHelper(Node * & node, int r, int count){
  * Rotate headOfRow_ if necessary.
  */
 void Grid::rotateC(int c, int count) { /* your code here */
-    if(count == 0) return;
+    c = c%numCols();
+    if(count == 0) {
+      if(c == 0){
+        Node *headRow = headOfCol_[c];
+        for(int i = 0; i < numRows();i++){
+            headOfRow_[i] = headRow;
+            headRow = headRow->down;
+        }
+      }
+      return;
+    }
     Node* head = headOfCol_[c];
-    rotateCHelper(head, c, numRows());
+    rotateCHelper(head, c, numRows()-1);
     rotateC(c, count-1);
 }
 
 void Grid::rotateCHelper(Node * & node, int c, int count){
     if(count == 0){
+        headOfCol_[c == 0 ? numCols()-1:c-1]->right = node;
+        headOfCol_[c == numCols() - 1? 0:c+1]->left = node;
         node->left = headOfCol_[c == 0? numCols() - 1: c-1];
         node->right = headOfCol_[c == numCols() - 1 ? 0: c+1];
         headOfCol_[c] = node;
+        return;
     }
+    node->down->left->right = node;
+    node->down->right->left = node;
     node->right = node->down->right;
     node->left = node->down->left;
     rotateCHelper(node->down, c, count-1);
@@ -74,7 +109,7 @@ void Grid::clear() { /*your code here*/
     bwidth_ = 0;
     for(int i = 0; i < numRows(); i++){
         Node * ptr = headOfRow_[i];
-        while(ptr != NULL){
+        for(int j = 0; j < numCols(); j++){
             Node * temp = ptr->right;
             delete ptr;
             ptr = temp;

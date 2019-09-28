@@ -28,16 +28,17 @@ Block::Block(PNG & im, int x, int y, int width, int height) {/*your code here*/
     
     
     int temp_y = y;
-    for(int i = 0; i < height-1; i++){
+    for(int i = 0; i < height; i++){
         vector<HSLAPixel> temp;
         int temp_x = x;
-        for(int j = 0; j < width - 1; j++){
+        for(int j = 0; j < width; j++){
             HSLAPixel p = *im.getPixel(temp_x,temp_y);
             temp.push_back(p);
             temp_x++;
         }
         data.push_back(temp);
         temp_y++;
+        
     }
 }
 
@@ -46,9 +47,9 @@ Block::Block(PNG & im, int x, int y, int width, int height) {/*your code here*/
  */
 void Block::render(PNG & im, int x, int y) const {/*your code here*/
     int temp_y = y;
-    for(int i = 0; i < width()-1; i++){
+    for(int i = 0; i < height(); i++){
         int temp_x = x;
-        for(int j = 0; j < height() - 1 ; j++){
+        for(int j = 0; j < width(); j++){
             *im.getPixel(temp_x,temp_y) = data[i][j];
             temp_x++;
         }
@@ -61,8 +62,8 @@ void Block::render(PNG & im, int x, int y) const {/*your code here*/
  * which removes the color, leaving grey.
  */
 void Block::greyscale() {/*your code here*/
-    for(int i = 0; i < width() - 1; i++){
-        for(int j = 0; j < height() - 1; j++){
+    for(int i = 0; i < height(); i++){
+        for(int j = 0; j < width(); j++){
             data[i][j].s = 0;
         }
     }

@@ -24,10 +24,12 @@ using namespace std;
  * COMPLETE FOR PA1
  */
 #define PUZZLE_SOLUTION  \
-  g.rotateR(0, 0);\
-  g.rotateC(0, 0);\
-  g.rotateR(0, 0);\
-  g.rotateC(0, 0);
+  g.rotateC(1,1);\
+  g.rotateR(0,1);\
+  g.rotateC(1, 1);\
+  g.rotateR(0,2);\
+  g.rotateC(1,2);\
+
 
 /**
  * Grid: This is a container class for blocks. It is implemented
