@@ -64,6 +64,7 @@ int main() {
   result = g.render();
   result.writeToFile("images/out-main-puzzle.png");
 
+
   expected.readFromFile("images/given-puzzle.png");
   if (expected == result) cout<< "puzzle PASSED" << endl;
   else cout << "puzzle FAILED" << endl;

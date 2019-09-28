@@ -30,6 +30,14 @@ using namespace std;
   g.rotateR(0,2);\
   g.rotateC(1,2);\
 
+  #define PUZZLE_SOLUTION2 \
+   g.rotateR(2,3);\
+   g.rotateR(1,2);\
+
+   #define PUZZLE_SOLUTION3 \
+   g.rotateC(2,3);\
+   g.rotateC(1,2);\
+
 
 /**
  * Grid: This is a container class for blocks. It is implemented

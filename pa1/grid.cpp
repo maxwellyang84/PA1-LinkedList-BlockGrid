@@ -10,7 +10,6 @@
  */
 Grid::~Grid(){ /*your code here*/
     clear();
-    delete this;
 }
 
 /**
@@ -107,13 +106,16 @@ void Grid::rotateCHelper(Node * & node, int c, int count){
 void Grid::clear() { /*your code here*/
     bheight_ = 0;
     bwidth_ = 0;
-    for(int i = 0; i < numRows(); i++){
+    int rows = numRows();
+    int cols = numCols();
+    for(int i = 0; i < rows; i++){
         Node * ptr = headOfRow_[i];
-        for(int j = 0; j < numCols(); j++){
+        for(int j = 0; j < cols; j++){
             Node * temp = ptr->right;
             delete ptr;
             ptr = temp;
         }
+        // headOfRow_.erase(headOfRow_.begin() + i);
     }
     headOfRow_.clear();
     headOfCol_.clear();
